@@ -4,13 +4,12 @@ import os
 import sys
 import urllib2
 
-response=urllib2.urlopen('http://www.yahoo.com')
 
-#ACCESS_KEY = raw_input("Enter AWS Access Key: ")
-#SECRET_KEY = raw_input("Enter AWS Secret Key: ")
+ACCESS_KEY = raw_input("Enter AWS Access Key: ")
+SECRET_KEY = raw_input("Enter AWS Secret Key: ")
 
-#if not ACCESS_KEY:
-#  sys.exit("ERROR: Key error. Exiting")
+if not ACCESS_KEY:
+  sys.exit("ERROR: Key error. Exiting")
 
 VPC=[]
 
