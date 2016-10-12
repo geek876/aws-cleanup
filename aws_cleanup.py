@@ -33,6 +33,7 @@ def build_subnet_list(vpc_connection):
 def build_routetable_list(vpc_connection):
   route_tables=vpc_connection.get_all_route_tables(filters=[('vpc-id',VPC)])
   for route_table in route_tables:
+    print(route_table.routes)
     ROUTE_TABLES.append(route_table.id)
 
 def build_ig_list(vpc_connection):
@@ -54,18 +55,28 @@ def print_assets_to_delete():
   print_banner("Subnets")
   for subnet in SUBNETS: print(subnet)
   print_banner("Route Tables")
-  for rt in ROUTE_TABLES: print(rt)
+  for rt in ROUTE_TABLES:
+    print(rt.destination_cidr_block)
+
   print_banner("Internet Gateways")
   for ig in IG: print(ig)
   print_banner("Network ACLs")
   for acl in ACL: print(acl)
 
 
-def cleanup():
+def cleanup(vpc_connection):
   print_assets_to_delete()
   print("")
   answer=raw_input("Are you sure you want to delete these assets (y/n)?: ")
-  print(answer)
+  if answer == 'y' or answer == "Y":
+    for subnet in SUBNETS:
+      vpc_connection.delete_subnet(subnet)
+    for rt in ROUTE_TABLES:
+      vpc_connection.delete_route_table(rt)
+    for vpc in VPC:
+      vpc_connection.delete_vpc(vpc)
+  else:
+    print ("Bye !")
 
 
 if __name__ == "__main__":
@@ -87,7 +98,7 @@ if __name__ == "__main__":
     build_ig_list(vpc_connection)
     build_acl_list(vpc_connection)
 
-    cleanup()
+    cleanup(vpc_connection)
 
 
 
