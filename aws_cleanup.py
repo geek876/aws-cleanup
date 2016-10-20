@@ -8,7 +8,6 @@
 # Warning: Deleting the default VPC is a permanent action.
 #          You must contact AWS Support if you want to create a new default VPC.
 #
-# Source: https://github.com/toddm92/vpc-delete/blob/master/remove-vpc.py
 
 # Must be the first line
 from __future__ import print_function
